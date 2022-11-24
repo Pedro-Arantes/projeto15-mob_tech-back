@@ -15,4 +15,6 @@ console.log("Erro no mongo.conect", err.message);
 db = mongoClient.db("mobTech");
 export const usersCollection = db.collection("users");
 export const sessionsCollection = db.collection("sessions");
+export const cartsCollection = db.collection("carts");
+export const purchasesCollection = db.collection("purchases");
 //
