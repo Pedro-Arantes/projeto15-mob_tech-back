@@ -1,20 +1,27 @@
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
+
+import bcrypt from 'bcrypt';
+
 dotenv.config();
 
+const DATABASE_NAME = 'MobTech';
+
 const mongoClient = new MongoClient(process.env.MONGO_URI);
-let db;
 
 try {
-await mongoClient.connect();
+  await mongoClient.connect();
+  console.log('Connection to data server established!');
 } catch (err) {
-console.log("Erro no mongo.conect", err.message);
+  console.log('Failed to connect to database:', err);
 }
 
 //Data base e collections
-db = mongoClient.db("mobTech");
+const db = mongoClient.db(DATABASE_NAME);
 export const usersCollection = db.collection("users");
 export const sessionsCollection = db.collection("sessions");
 export const cartsCollection = db.collection("carts");
 export const purchasesCollection = db.collection("purchases");
+export const productsCollection = db.collection("products");
+export const adminsCollection = db.collection("admins");
 //
