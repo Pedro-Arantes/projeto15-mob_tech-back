@@ -1,4 +1,5 @@
 import { cartsCollection,sessionsCollection  } from "../databases/db.js"
+import { ObjectId } from "mongodb";
 
 export async function  postCart(req,res){
     const { model, price, img,amount } = req.body;
@@ -7,7 +8,7 @@ export async function  postCart(req,res){
 
     if (!token) return res.sendStatus(401);
     try {
-        const session = await sessionsCollection.findOne({ token, });
+        const session = await sessionsCollection.findOne({ token });
         
         if (!session) {
             console.log("aqui")
@@ -66,6 +67,28 @@ export async function deleteCart (req,res){
 }
 
 export async function updateAmount(req,res){
+    const { amount,id } = req.body;
+    const { authorization } = req.headers;
+    const token = authorization?.replace('Bearer ', '');
+    
+    if (!token) return res.sendStatus(401);
 
+    try {
+        const session = await sessionsCollection.findOne({ token });
+        
+        if (!session) {
+            console.log("aqui")
+            return res.sendStatus(401);
+        }
+        
+        await cartsCollection.updateOne({ 
+			_id: ObjectId(id)
+		}, { $set: {amount} })
+
+        res.sendStatus(200)
+
+    } catch (error) {
+        console.log(error)
+    }
 }
 
