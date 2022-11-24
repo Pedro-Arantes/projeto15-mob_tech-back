@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import joi from "joi";
 
 //Routers
 import userRouters from "./routes/usersRoutes.js"
@@ -14,14 +13,6 @@ app.use(cors());
 app.use(express.json());
 app.use(userRouters);
 app.use(sessionRouters)
-//
-
-//Schemas
-export const userSchema = joi.object({
-    name: joi.string().required().min(1),
-    email: joi.string().required().min(1),
-    password: joi.required()
-});
 //
 
 

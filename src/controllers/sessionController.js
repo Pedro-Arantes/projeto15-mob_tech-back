@@ -10,6 +10,7 @@ export async function postLogin(req, res) {
 
     const userExistente = await usersCollection.findOne({ email: email });
     if (!userExistente) {
+        console.log("Usuário não encontrado")
         res.sendStatus(404);
         return;
     }
@@ -32,7 +33,6 @@ export async function postLogin(req, res) {
             token,
             userId: userExistente._id,
         })
-
 
         res.send([{ token: token, name: userExistente.name, userId: userExistente._id }])
         return;
