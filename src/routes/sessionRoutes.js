@@ -5,6 +5,6 @@ import {validateBody} from '../middlewares/bodyValidationMiddleware.js'
 
 const router = Router();
 
-router.post("/login", validateBody, postLogin);  
+router.post("/sign-in", validateBody, postLogin);  
 
 export default router;
