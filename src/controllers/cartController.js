@@ -1,7 +1,7 @@
 import { cartsCollection,sessionsCollection  } from "../databases/db.js"
 
 export async function  postCart(req,res){
-    const { model, price, img } = req.body;
+    const { model, price, img,amount } = req.body;
     const { authorization } = req.headers;
     const token = authorization?.replace('Bearer ', '');
 
@@ -19,7 +19,8 @@ export async function  postCart(req,res){
             userId,
             model,
             price,
-            img
+            img,
+            amount
         }
         
         await cartsCollection.insertOne(obj);
