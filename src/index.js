@@ -6,6 +6,7 @@ import joi from "joi";
 import userRouters from "./routes/usersRoutes.js"
 import sessionRouters from './routes/sessionRoutes.js'
 import cartRoutes from './routes/cartRoutes.js'
+import productsRoutes from './routes/productsRoutes.js'
 import purchaseRoutes from './routes/purchasesRoutes.js'
 //
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(userRouters);
 app.use(sessionRouters)
 app.use(cartRoutes)
+app.use(productsRoutes)
 app.use(purchaseRoutes)
 //
 
