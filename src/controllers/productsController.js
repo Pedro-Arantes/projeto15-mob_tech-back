@@ -1,9 +1,25 @@
 import { productsCollection } from '../databases/db.js';
 
 export async function getProducts(req, res) {
+
+  const questions = (req.query.q.split(' ')
+    .filter(term => term.length > 2)
+    .map(term => new RegExp(term, 'i')));
+  
+  if (questions.length === 0) {
+    questions.push(new RegExp())
+  }
+
   try {
-    const products = await productsCollection.find().toArray();
-    res.status(200).send(products);
+    const productsSearch = await productsCollection.find(
+      {
+        $or: [
+          { "model": { $in: questions } },
+          { "version": { $in: questions } }
+        ]
+      }
+    ).toArray();
+    res.status(200).send(productsSearch);
 
   } catch (err) {
     console.error('An error has occurred: ', err);
