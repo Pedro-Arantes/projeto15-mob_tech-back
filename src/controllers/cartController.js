@@ -59,7 +59,28 @@ export async function getCart(req,res){
 }
 
 export async function deleteItem (req,res){
+    const { authorization,id } = req.headers
+    
+    const token = authorization?.replace('Bearer ', '');
+    
 
+    if (!token) return res.sendStatus(401);
+
+    try {
+        const session = await sessionsCollection.findOne({ token });
+
+        if (!session) return res.sendStatus(401);
+
+        
+
+        await cartsCollection.deleteOne({ _id: ObjectId(id) })
+        
+        res.sendStatus(200)
+        return
+    }catch (error) {
+        console.log(error)
+        res.sendStatus(400)
+    }
 }
 
 export async function deleteCart (req,res){
