@@ -19,7 +19,11 @@ export async function getProducts(req, res) {
         ]
       }
     ).toArray();
-    res.status(200).send(productsSearch);
+    res.status(200).send(productsSearch.map(product => {
+      product.id = product._id;
+      delete product._id;
+      return product;
+    }));
 
   } catch (err) {
     console.error('An error has occurred: ', err);
