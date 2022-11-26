@@ -1,10 +1,11 @@
-import { postSignup } from '../controllers/userController.js'
-import { Router } from 'express'
+import { Router } from 'express';
+
+import { postSignUp } from '../controllers/userController.js';
+import { userSchemaValidationSignUp } from '../middlewares/userSchemaValidationMiddleware.js';
+import { signUpValidation } from '../middlewares/signUpValidationMiddleware.js';
 
 const router = Router();
 
-import {validateBody} from '../middlewares/bodyValidationMiddleware.js'
-
-router.post("/sign-up", validateBody, postSignup);
+router.post('/cadastro', userSchemaValidationSignUp, signUpValidation, postSignUp);
 
 export default router;

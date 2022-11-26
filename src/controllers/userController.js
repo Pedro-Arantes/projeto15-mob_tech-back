@@ -1,43 +1,19 @@
-import { userSchema } from "../index.js";
-import { usersCollection } from "../databases/db.js";
-import bcrypt from "bcrypt";
+import { sessionsCollection, usersCollection } from '../databases/db.js';
+import bcrypt from 'bcrypt';
 
-export async function postSignup (req, res) {
+export async function postSignUp(req, res) {
+  const ROUNDS = 12;
+  const user = res.locals.user;
+  const hashPassword = bcrypt.hashSync(user.password, ROUNDS);
 
-    const user = req.body;
-    
-    
-    const { error } = userSchema.validate(user, {abortEarly: false});
-    if (error){
-        const errors = error.details.map((details) => details.message);
-        console.log(errors);
-        res.status(400).send(errors)
-    }
+  try {
+    await usersCollection.insertOne({ ...user, password: hashPassword, imageURL:'' });
+    res.status(201).send({ message: 'Usuário criado com sucesso!' });
 
-    const emailExistente = await usersCollection.findOne({email: user.email});
-        if(emailExistente){
-            res.status(500).send("Ja foi criada uma conta com esse email!");
-            return;
-        }
+  } catch (err) {
+    console.error('An error has occurred: ', err);
+    res.status(500).send({ message: 'Ocorreu um erro!', error: `${err}` });
+  }
 
-    const hashPassword = bcrypt.hashSync(user.password, 10);
-
-    const bodyCadastro = {
-        name: user.name,
-        email: user.email,
-        password: hashPassword
-    }
-
-    try {
-        await usersCollection.insertOne(bodyCadastro);
-        res.sendStatus(200);
-        return;
-    } catch (error) {
-        console.log(error);
-        res.sendStatus(500)
-        return;
-    }
-
-
-
+  return;
 }

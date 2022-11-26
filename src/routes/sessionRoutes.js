@@ -1,10 +1,11 @@
-import { postLogin } from '../controllers/sessionController.js'
-import { Router } from 'express'
+import { Router } from 'express';
 
-import {validateBody} from '../middlewares/bodyValidationMiddleware.js'
+import { userSchemaValidationSignIn } from '../middlewares/userSchemaValidationMiddleware.js';
+import { signInValidation } from '../middlewares/signInValidationMiddleware.js';
+import { postSignIn } from '../controllers/sessionController.js';
 
 const router = Router();
 
-router.post("/sign-in", validateBody, postLogin);  
+router.post('/login', userSchemaValidationSignIn, signInValidation, postSignIn);
 
 export default router;
