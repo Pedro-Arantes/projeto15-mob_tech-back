@@ -27,7 +27,11 @@ export const userSchema = joi.object({
     password: joi.required()
 });
 //
-
+app.get('/', (req, res) => {
+    res.sendStatus(200)
+  })
+  
+  
 
 const port = 5000;
 app.listen(port, () => console.log(`Server running in port: ${port}`));
