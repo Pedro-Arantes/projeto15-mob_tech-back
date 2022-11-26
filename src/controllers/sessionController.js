@@ -10,7 +10,7 @@ export async function postSignIn(req, res) {
         userId: user._id,
         token,
       });
-      res.status(200).send({ name: user.name, token: token, image: user.imageURL });
+      res.status(200).send({ name: user.name, image: user.imageURL, token: token });
   
     } catch (err) {
       console.error('An error has occurred: ', err);

@@ -2,7 +2,7 @@ import { cartsCollection,sessionsCollection  } from "../databases/db.js"
 import { ObjectId } from "mongodb";
 
 export async function  postCart(req,res){
-    const { model, price, img,amount } = req.cart;
+    const { model, price, img,amount } = req.body;
     const { authorization } = req.headers;
     const token = authorization?.replace('Bearer ', '');
 
@@ -88,7 +88,7 @@ export async function deleteCart (req,res){
 }
 
 export async function updateAmount(req,res){
-    const { amount,id } = req.cart;
+    const { amount,id } = req.body;
     const { authorization } = req.headers;
     const token = authorization?.replace('Bearer ', '');
     
