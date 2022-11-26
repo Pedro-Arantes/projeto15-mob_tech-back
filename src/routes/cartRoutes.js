@@ -1,5 +1,5 @@
 import { postCart,getCart,deleteItem,updateAmount } from "../controllers/cartController.js";
-import { cartSchemaValidation } from "../middlewares/cartSchemaValidationMiddleware";
+import { cartSchemaValidation } from "../middlewares/cartSchemaValidationMiddleware.js";
 import { Router } from "express";
 
 
