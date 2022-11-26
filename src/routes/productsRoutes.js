@@ -5,7 +5,7 @@ import { productSchemaValidation } from "../middlewares/productSchemaValidationM
 import { adminValidation } from "../middlewares/adminValidation.js";
 
 const router = Router();
-router.get("/", getProducts);
-router.post("/", adminValidation, productSchemaValidation, postProducts);
+router.get("/products", getProducts);
+router.post("/products", adminValidation, productSchemaValidation, postProducts);
 
 export default router;

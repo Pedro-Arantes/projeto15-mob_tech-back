@@ -6,6 +6,6 @@ import { postSignIn } from '../controllers/sessionController.js';
 
 const router = Router();
 
-router.post('/login', userSchemaValidationSignIn, signInValidation, postSignIn);
+router.post('/sign_in', userSchemaValidationSignIn, signInValidation, postSignIn);
 
 export default router;
