@@ -1,45 +1,21 @@
-import { usersCollection, sessionsCollection } from "../databases/db.js";
-import { v4 as uuidV4 } from 'uuid';
-import bcrypt from "bcrypt";
+import { sessionsCollection } from '../databases/db.js';
+import { v4 as uuid } from 'uuid';
 
-
-export async function postLogin(req, res) {
-
-    const { email, password } = req.body;
-    const token = uuidV4();
-
-    const userExistente = await usersCollection.findOne({ email: email });
-    if (!userExistente) {
-        res.sendStatus(404);
-        return;
-    }
-
-    const logado = await sessionsCollection.findOne({ userId: userExistente._id });
-    if (logado !== null) {
-        res.sendStatus(401);
-        return;
-    }
-
-    const passwordOk = bcrypt.compareSync(password, userExistente.password);
-    if (!passwordOk) {
-        res.sendStatus(401);
-        return;
-    }
-
+export async function postSignIn(req, res) {
+    const user = res.locals.user;
+    const token = uuid();
+  
     try {
-
-        await sessionsCollection.insertOne({
-            token,
-            userId: userExistente._id,
-        })
-
-
-        res.send([{ token: token, name: userExistente.name, userId: userExistente._id }])
-        return;
-
+      await sessionsCollection.insertOne({
+        userId: user._id,
+        token,
+      });
+      res.status(200).send({ name: user.name, token: token, image: user.imageURL });
+  
     } catch (err) {
-        console.log(err, "erro no try/catch /login ")
-        res.sendStatus(500);
-        return;
+      console.error('An error has occurred: ', err);
+      res.status(500).send({ message: 'Ocorreu um erro!', error: `${err}` });
     }
-}
+  
+    return;
+  }
