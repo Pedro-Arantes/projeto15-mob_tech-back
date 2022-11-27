@@ -8,6 +8,7 @@ import sessionRouters from './routes/sessionRoutes.js'
 import cartRoutes from './routes/cartRoutes.js'
 import productsRoutes from './routes/productsRoutes.js'
 import purchaseRoutes from './routes/purchasesRoutes.js'
+import favoritesRoutes from './routes/favoritesRoutes.js'
 //
 
 //Configs app
@@ -20,6 +21,7 @@ app.use(sessionRouters)
 app.use(cartRoutes)
 app.use(productsRoutes)
 app.use(purchaseRoutes)
+app.use(favoritesRoutes)
 //
 
 //
