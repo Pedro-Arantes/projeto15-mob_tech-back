@@ -4,8 +4,14 @@ export async function getFav(req, res) {
   const userId = res.locals.userId
 
   try {
+
     const favorites = await favoritesCollection.find({ userId: userId }).toArray();
-    res.status(200).send(favorites);
+    res.status(200).send(favorites.map(favorite => {
+      favorite.id = favorite.productId;
+      delete favorite._id;
+      delete favorite.userId;
+      return favorite;
+    }));
 
   } catch (err) {
     console.error('An error has occurred: ', err);
