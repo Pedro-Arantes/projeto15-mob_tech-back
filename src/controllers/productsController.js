@@ -2,7 +2,7 @@ import { productsCollection } from '../databases/db.js';
 
 export async function getProducts(req, res) {
 
-  const questions = (req.query.q.split(' ')
+  const questions = (req.query.search.split(' ')
     .filter(term => term.length > 2)
     .map(term => new RegExp(term, 'i')));
   

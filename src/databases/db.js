@@ -21,6 +21,7 @@ const db = mongoClient.db(DATABASE_NAME);
 export const usersCollection = db.collection("users");
 export const sessionsCollection = db.collection("sessions");
 export const cartsCollection = db.collection("carts");
+export const favoritesCollection = db.collection("favorites");
 export const purchasesCollection = db.collection("purchases");
 export const productsCollection = db.collection("products");
 export const adminsCollection = db.collection("admins");
