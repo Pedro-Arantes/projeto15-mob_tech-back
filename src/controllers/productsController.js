@@ -1,13 +1,14 @@
 import { productsCollection } from '../databases/db.js';
 
 export async function getProducts(req, res) {
+  let questions;
 
-  const questions = (req.query.search.split(' ')
-    .filter(term => term.length > 2)
-    .map(term => new RegExp(term, 'i')));
-  
-  if (questions.length === 0) {
-    questions.push(new RegExp())
+  if (req.query.search) {
+    questions = (req.query.search.split(' ')
+      .filter(term => term.length > 1)
+      .map(term => new RegExp(term, 'i')));
+  } else {
+    questions = [new RegExp()];
   }
 
   try {
